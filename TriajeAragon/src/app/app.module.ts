@@ -4,9 +4,10 @@ import {ButtonModule} from 'primeng/button';
 import { PatientServiceService } from './patient-service.service';
 import { AppComponent } from './app.component';
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PatientListComponent } from './patient-list/patient-list.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -16,10 +17,10 @@ import { PatientListComponent } from './patient-list/patient-list.component';
   imports: [
     BrowserModule,
     ButtonModule,
-    HttpClient,
+    HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
-
+    ReactiveFormsModule,
+    AppRoutingModule,
   ],
   providers: [PatientServiceService],
   bootstrap: [AppComponent]
