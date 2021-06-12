@@ -93,3 +93,6 @@ C:\Users\Javier\Desktop\TFG\api\webAPI\webAPI\obj\Debug\webAPI.csproj.CoreCompil
 C:\Users\Javier\Desktop\TFG\api\webAPI\webAPI\obj\Debug\webAPI.csproj.CopyComplete
 C:\Users\Javier\Desktop\TFG\api\webAPI\webAPI\obj\Debug\webAPI.dll
 C:\Users\Javier\Desktop\TFG\api\webAPI\webAPI\obj\Debug\webAPI.pdb
+C:\Users\Javier\Desktop\TFG\api\webAPI\webAPI\bin\System.Web.Cors.dll
+C:\Users\Javier\Desktop\TFG\api\webAPI\webAPI\bin\System.Web.Http.Cors.dll
+C:\Users\Javier\Desktop\TFG\api\webAPI\webAPI\bin\System.Web.Http.Cors.xml
