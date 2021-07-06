@@ -1,0 +1,35 @@
+.title{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  color: #1a9090;
+}
+
+.title h1{
+  text-align: center;
+}
+
+.patient-list{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+.generateButtonDiv{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.startButtonDiv{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+/* .generateButton{
+  background-color: rgb(177, 207, 184);
+} */

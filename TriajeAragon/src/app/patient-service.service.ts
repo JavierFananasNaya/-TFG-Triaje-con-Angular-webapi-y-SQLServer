@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { observable, Observable } from 'rxjs';
+import { Patient } from 'src/app/models/patient';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,11 @@ export class PatientServiceService {
 
   constructor(private http:HttpClient) {}
     getPatientList():Observable<any[]>{
-      return this.http.get<any>(this.APiUrl+'/patient');
+      return this.http.get<Patient[]>(this.APiUrl+'/patient');
+    }
+
+    getRandomPatient():Observable<any[]>{
+      return this.http.get<Patient[]>(this.APiUrl+'/SinglePatient');
     }
 
     addPatient(patient:any){

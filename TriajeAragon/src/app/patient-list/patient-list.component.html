@@ -1,1 +1,21 @@
-<p>patient-list works!</p>
+<div class="title">
+  <h1>LISTADO DE PACIENTES</h1>
+</div>
+
+<div >
+  <p-listbox [options]="patientList" [(ngModel)]="selectedPatient" [listStyle]="{'max-height':'250px'}" optionLabel="name">
+    <ng-template let-patient pTemplate="item">
+      <div class="patient-item">
+          <div>{{patient.surname}}, {{patient.name}}</div>
+      </div>
+  </ng-template>
+  </p-listbox>
+</div>
+<br/>
+<div class="generateButtonDiv">
+  <button pButton pRipple type="button" label="*Generar paciente*" class="p-button-secondary p-button-rounded" (click)="getSinglePatient()"></button>
+</div>
+
+<div class="startButtonDiv" *ngIf="selectedPatient !== null">
+  <button pButton pRipple type="button" label="COMENZAR TRIAJE" class="p-button-rounded" style="width: 300px; height: 60px; font-size: 24px;" (click)="openTriageModal()"></button>
+</div>
