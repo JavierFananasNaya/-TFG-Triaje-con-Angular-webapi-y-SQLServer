@@ -17,5 +17,14 @@
 </div>
 
 <div class="startButtonDiv" *ngIf="selectedPatient !== null">
-  <button pButton pRipple type="button" label="COMENZAR TRIAJE" class="p-button-rounded" style="width: 300px; height: 60px; font-size: 24px;" (click)="openTriageModal()"></button>
+  <button pButton pRipple type="button" label="COMENZAR TRIAJE" class="p-button-rounded" style="width: 300px; height: 60px; font-size: 24px;" (click)="openTriajeModal(); maximizeDialog(triajeDialog)"></button>
 </div>
+
+
+<p-dialog #triajeDialog  [(visible)]="displayTriaje" [modal]="true" [style]="{width: '50vw'}" [closable]="false" [baseZIndex]="10000"
+    [draggable]="false" [resizable]="false">
+    <triaje-form [patient]="selectedPatient"></triaje-form>
+        <ng-template pTemplate="footer">
+            <p-button icon="pi pi-sign-out" (click)="displayMaximizable=false" label="Salir del Triaje" styleClass="p-button-text"></p-button>
+        </ng-template>
+</p-dialog>

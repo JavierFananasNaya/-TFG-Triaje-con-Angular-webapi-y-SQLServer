@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Dialog } from 'primeng/dialog';
 import { Patient } from 'src/app/models/patient';
 import { PatientServiceService } from '../patient-service.service';
 
@@ -10,6 +11,7 @@ import { PatientServiceService } from '../patient-service.service';
 export class PatientListComponent implements OnInit {
   patientList: Patient[];
   selectedPatient: Patient;
+  displayTriaje: boolean = false;
 
   constructor(private patientService: PatientServiceService) {
     this.patientList = [];
@@ -28,6 +30,14 @@ export class PatientListComponent implements OnInit {
       });
       console.log(this.patientList);
     });
+  }
+
+  openTriajeModal(){
+    this.displayTriaje = true;
+  }
+
+  maximizeDialog(dialog: Dialog){
+    dialog.maximize();
   }
 
   ngOnInit(): void {}

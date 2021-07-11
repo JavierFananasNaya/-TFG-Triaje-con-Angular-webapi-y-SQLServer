@@ -1,0 +1,30 @@
+.header{
+  display: flex;
+  justify-content: space-between;
+}
+
+.quickQuestions{
+  display: flex;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.answerContainer{
+  width:80%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.answer{
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+}
+
+.answer button{
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+}

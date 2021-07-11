@@ -10,12 +10,16 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { PatientServiceService } from './patient-service.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-// import { LoginComponent } from './login/login.component';
+import {ConfirmationService} from 'primeng/api';
 import { HomeComponent } from './home/home.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //PRIME NG MODULES
 
 import {ListboxModule} from 'primeng/listbox';
+import {DialogModule} from 'primeng/dialog';
+import { TriajeFormComponent } from './triaje-form/triaje-form.component';
+import {ConfirmPopupModule} from 'primeng/confirmpopup';
 
 @NgModule({
   declarations: [
@@ -23,6 +27,7 @@ import {ListboxModule} from 'primeng/listbox';
     PatientListComponent,
     // LoginComponent,
     HomeComponent,
+    TriajeFormComponent,
 
   ],
   imports: [
@@ -33,9 +38,12 @@ import {ListboxModule} from 'primeng/listbox';
     ReactiveFormsModule,
     AppRoutingModule,
     NgbModule,
-    ListboxModule
+    ListboxModule,
+    DialogModule,
+    BrowserAnimationsModule,
+    ConfirmPopupModule
   ],
-  providers: [PatientServiceService],
+  providers: [PatientServiceService, ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
