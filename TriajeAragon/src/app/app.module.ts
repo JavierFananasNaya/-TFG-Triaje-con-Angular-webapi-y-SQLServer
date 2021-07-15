@@ -20,6 +20,8 @@ import {ListboxModule} from 'primeng/listbox';
 import {DialogModule} from 'primeng/dialog';
 import { TriajeFormComponent } from './triaje-form/triaje-form.component';
 import {ConfirmPopupModule} from 'primeng/confirmpopup';
+import {InputNumberModule} from 'primeng/inputnumber';
+
 
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ import {ConfirmPopupModule} from 'primeng/confirmpopup';
     ListboxModule,
     DialogModule,
     BrowserAnimationsModule,
-    ConfirmPopupModule
+    ConfirmPopupModule,
+    InputNumberModule
   ],
   providers: [PatientServiceService, ConfirmationService],
   bootstrap: [AppComponent]

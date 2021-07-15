@@ -23,8 +23,5 @@
 
 <p-dialog #triajeDialog  [(visible)]="displayTriaje" [modal]="true" [style]="{width: '50vw'}" [closable]="false" [baseZIndex]="10000"
     [draggable]="false" [resizable]="false">
-    <triaje-form [patient]="selectedPatient"></triaje-form>
-        <ng-template pTemplate="footer">
-            <p-button icon="pi pi-sign-out" (click)="displayMaximizable=false" label="Salir del Triaje" styleClass="p-button-text"></p-button>
-        </ng-template>
+    <triaje-form [patient]="selectedPatient" (closeEvent)="closeTriajeForm($event)"></triaje-form>
 </p-dialog>

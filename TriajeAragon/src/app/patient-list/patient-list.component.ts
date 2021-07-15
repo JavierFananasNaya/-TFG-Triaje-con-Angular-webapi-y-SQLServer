@@ -40,5 +40,10 @@ export class PatientListComponent implements OnInit {
     dialog.maximize();
   }
 
+  closeTriajeForm(event){
+    this.displayTriaje = false;
+    this.selectedPatient = null;
+  }
+
   ngOnInit(): void {}
 }

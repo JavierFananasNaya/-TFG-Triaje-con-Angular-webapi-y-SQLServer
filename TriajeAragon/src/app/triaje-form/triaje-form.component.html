@@ -11,26 +11,72 @@
   </div>
 </div>
 
-<div class="quickQuestions">
+<div class="quickQuestions" *ngIf="quickQuestions">
   <div>
     <h1>{{ questions[step].question }}</h1>
   </div>
   <div class="answerContainer">
     <ng-container *ngFor="let option of questions[step].options">
       <div class="answer">
-        <button
-          pButton
-          pRipple
-          type="button"
-          label="{{ option.label }}"
-          (click)="nextStep(option.value)"
-          class="p-button-outlined"
-        ></button>
+        <button pButton pRipple type="button" label="{{ option.label }}" (click)="nextStep(option.value)" class="p-button-outlined"></button>
       </div>
     </ng-container>
   </div>
   <div style="align-self: flex-start;">
-    <button pButton pRipple type="button"  (click)="previousStep()" class="p-button-outlined" icon="pi pi-arrow-left">
+    <button pButton pRipple type="button" *ngIf="this.step > 0"  (click)="previousStep()" class="p-button-outlined" icon="pi pi-arrow-left">
     </button>
   </div>
 </div>
+<div class="variablesForm" *ngIf="(!quickQuestions) && (!finalResponse)">
+  <div>
+    <h2>Constantes del paciente</h2>
+  </div>
+  <div>
+    <span class="p-float-label">
+      <p-inputNumber [(ngModel)]="value20" mode="decimal" [showButtons]="true" inputId="oxygenSaturation" [min]="0" [max]="100">
+      </p-inputNumber>
+      <label for="oxygenSaturation">Saturación de oxigeno</label>
+    </span>
+  </div>
+  <div>
+    <span class="p-float-label">
+      <p-inputNumber [(ngModel)]="value20" mode="decimal" [showButtons]="true" inputId="heartRate">
+      </p-inputNumber>
+      <label for="heartRate">Frecuencia cardiaca</label>
+    </span>
+  </div>
+  <div>
+    <span class="p-float-label">
+      <p-inputNumber [(ngModel)]="value20" mode="decimal" [showButtons]="true" inputId="temperature">
+      </p-inputNumber>
+      <label for="temperature">Tª</label>
+    </span>
+  </div>
+  <div>
+    <span class="p-float-label">
+      <p-inputNumber [(ngModel)]="value20" mode="decimal" [showButtons]="true" inputId="bloodPressure">
+      </p-inputNumber>
+      <label for="bloodPressure">Tensión arterial</label>
+    </span>
+  </div>
+</div>
+<div [ngStyle]="{'background-color': patientLevel.color}" *ngIf="finalResponse">
+  <div>
+    <h1 style="color:rgb(255, 255, 255)">{{patientLevel.label}}</h1>
+  </div>
+  <div>
+    <h2 style="color:rgb(255, 255, 255)">Especialidad: {{destination}}</h2>
+  </div>
+  <div>
+    <h3 style="color:rgb(255, 255, 255)">Nivel de urgencia: {{patientLevel.level}}</h3>
+  </div>
+  <div>
+    <button style="color:rgb(255, 255, 255)" pButton pRipple label="Volver" type="button" (click)="backToTriaje()" class="p-button-outlined" icon="pi pi-arrow-left"></button>
+  </div>
+</div>
+
+<div>
+  <p-button *ngIf="!finalResponse" icon="pi pi-sign-out" (click)="confirm($event)" label="Salir del Triaje" styleClass="p-button-text"></p-button>
+</div>
+
+<p-confirmPopup [baseZIndex]="100000"></p-confirmPopup>

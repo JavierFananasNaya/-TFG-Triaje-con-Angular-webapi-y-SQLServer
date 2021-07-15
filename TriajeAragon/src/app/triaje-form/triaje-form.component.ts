@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
 import { Patient } from '../models/patient';
 
 @Component({
@@ -8,17 +9,33 @@ import { Patient } from '../models/patient';
 })
 export class TriajeFormComponent implements OnInit {
   @Input() patient: Patient;
+  @Output() closeEvent = new EventEmitter<boolean>();
 
   quickQuestions: boolean;
+  finalResponse: boolean;
   step: number;
+
   breathing: boolean;
   conscious: boolean;
   accident: boolean;
+  closeForm: boolean;
 
+  destination: string;
+  urgencyLevels: any[];
+  patientLevel: any;
   questions: any[];
 
-  constructor() {
+  constructor( private confirmationService: ConfirmationService) {
     this.patient = new Patient();
+    this.urgencyLevels = [
+      { label: 'ASISTENCIA INMEDIATA', level: 1, color: '#d92f23'},
+      { label: 'MUY URGENTE', level: 2, color: '#de5f2d' },
+      { label: 'URGENTE', level: 3, color: '#f6ca22' },
+      { label: 'Urgencia menor', level: 4, color: '#009444' },
+      { label: 'Sin Urgencia', level: 5, color: '#354a96' },
+    ];
+    this.patientLevel = this.urgencyLevels[this.urgencyLevels.length - 1];
+
     this.questions = [
       {
         question: '¿El paciente respira con normalidad?',
@@ -71,7 +88,11 @@ export class TriajeFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.quickQuestions = true;
+    this.finalResponse = false;
+    this.closeForm = false;
+
     this.step = 0;
+    this.destination = '';
   }
 
   nextStep(answer: boolean) {
@@ -135,16 +156,49 @@ export class TriajeFormComponent implements OnInit {
   }
 
   previousStep() {
-    if(this.step > 0){
-      if(this.step === 4){ // Controla que de la pregunta de la agresión pase a la pregunta del accidente y no a las causas del accidente
+    if (this.step > 0) {
+      if (this.step === 4) {
+        // Controla que de la pregunta de la agresión pase a la pregunta del accidente y no a las causas del accidente
         this.step = 2;
-      }else{
+      } else {
         this.step--;
       }
     }
   }
 
   sendTovitalDepartment() {
+    this.patientLevel = this.urgencyLevels[0];
+    this.destination = 'Vitales';
+    this.quickQuestions = false;
+    this.finalResponse = true;
     console.log('Patient goes to vital department');
   }
+
+  checkVariables(){
+
+  }
+
+  backToTriaje(){
+    this.ngOnInit();
+  }
+
+  closeFormFunction(){
+    this.closeForm = true;
+    this.closeEvent.emit(this.closeForm);
+  }
+
+  confirm(event: Event) {
+    console.log('ª');
+    this.confirmationService.confirm({
+        target: event.target,
+        message: '¿Desea abandonar el triaje de este paciente?',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+            this.closeFormFunction();
+        },
+        reject: () => {
+           return;
+        }
+    });
+}
 }
