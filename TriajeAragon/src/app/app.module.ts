@@ -9,6 +9,8 @@ import { PatientListComponent } from './patient-list/patient-list.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { PatientServiceService } from './patient-service.service';
+import { VitalServiceService } from './vital-service.service';
+
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {ConfirmationService} from 'primeng/api';
 import { HomeComponent } from './home/home.component';
@@ -21,6 +23,8 @@ import {DialogModule} from 'primeng/dialog';
 import { TriajeFormComponent } from './triaje-form/triaje-form.component';
 import {ConfirmPopupModule} from 'primeng/confirmpopup';
 import {InputNumberModule} from 'primeng/inputnumber';
+import {SliderModule} from 'primeng/slider';
+import {RadioButtonModule} from 'primeng/radiobutton';
 
 
 @NgModule({
@@ -44,9 +48,11 @@ import {InputNumberModule} from 'primeng/inputnumber';
     DialogModule,
     BrowserAnimationsModule,
     ConfirmPopupModule,
-    InputNumberModule
+    InputNumberModule,
+    SliderModule,
+    RadioButtonModule
   ],
-  providers: [PatientServiceService, ConfirmationService],
+  providers: [PatientServiceService,VitalServiceService, ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

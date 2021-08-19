@@ -27,39 +27,62 @@
     </button>
   </div>
 </div>
-<div class="variablesForm" *ngIf="(!quickQuestions) && (!finalResponse)">
+<div class="variablesForm" *ngIf="(!quickQuestions) && (!evaScale) && (!finalResponse)">
   <div>
     <h2>Constantes del paciente</h2>
   </div>
   <div>
     <span class="p-float-label">
-      <p-inputNumber [(ngModel)]="value20" mode="decimal" [showButtons]="true" inputId="oxygenSaturation" [min]="0" [max]="100">
+      <p-inputNumber [(ngModel)]="patientVariables.oSaturation" mode="decimal" [showButtons]="true" inputId="oxygenSaturation" [min]="0" [max]="100">
       </p-inputNumber>
       <label for="oxygenSaturation">Saturación de oxigeno</label>
     </span>
   </div>
   <div>
     <span class="p-float-label">
-      <p-inputNumber [(ngModel)]="value20" mode="decimal" [showButtons]="true" inputId="heartRate">
+      <p-inputNumber [(ngModel)]="patientVariables.heartRate" mode="decimal" [showButtons]="true" inputId="heartRate">
       </p-inputNumber>
       <label for="heartRate">Frecuencia cardiaca</label>
     </span>
   </div>
   <div>
     <span class="p-float-label">
-      <p-inputNumber [(ngModel)]="value20" mode="decimal" [showButtons]="true" inputId="temperature">
+      <p-inputNumber [(ngModel)]="patientVariables.temperature" mode="decimal" [showButtons]="true" inputId="temperature">
       </p-inputNumber>
       <label for="temperature">Tª</label>
     </span>
   </div>
   <div>
     <span class="p-float-label">
-      <p-inputNumber [(ngModel)]="value20" mode="decimal" [showButtons]="true" inputId="bloodPressure">
+      <p-inputNumber [(ngModel)]="patientVariables.sistolePreasure" mode="decimal" [showButtons]="true" inputId="sistolePreasure">
       </p-inputNumber>
-      <label for="bloodPressure">Tensión arterial</label>
+      <label for="sistolePreasure">Sistólica</label>
     </span>
   </div>
+  <div>
+    <span class="p-float-label">
+      <p-inputNumber [(ngModel)]="patientVariables.diastolePreasure" mode="decimal" [showButtons]="true" inputId="daistolePreasure">
+      </p-inputNumber>
+      <label for="bloodPressure">Diastólica</label>
+    </span>
+  </div>
+  <div>
+    <button pButton pRipple type="button" label="Comprobar constantes" class="p-button-rounded" style="width: 300px; height: 60px; font-size: 24px;" (click)="checkVariables()"></button>
+  </div>
 </div>
+<div *ngIf="evaScale">
+  <h4>Escala Eva del dolor</h4>
+  <!-- <p-inputNumber [(ngModel)]="evaScaleValue" [showButtons]="false">
+  </p-inputNumber> -->
+  <div *ngFor="let option of evaScaleOptions" class="p-field-checkbox">
+    <p-radioButton [inputId]="option.value" name="option" [value]="option.value" [(ngModel)]="evaScaleValue"></p-radioButton>
+    <label [for]="option.value">{{option.name}}</label>
+  </div>
+  <div>
+    <button pButton pRipple type="button" label="Comprobar escala" class="p-button-rounded" style="width: 300px; height: 60px; font-size: 24px;" (click)="checkEvaScale()"></button>
+  </div>
+</div>
+
 <div [ngStyle]="{'background-color': patientLevel.color}" *ngIf="finalResponse">
   <div>
     <h1 style="color:rgb(255, 255, 255)">{{patientLevel.label}}</h1>
@@ -72,6 +95,9 @@
   </div>
   <div>
     <button style="color:rgb(255, 255, 255)" pButton pRipple label="Volver" type="button" (click)="backToTriaje()" class="p-button-outlined" icon="pi pi-arrow-left"></button>
+  </div>
+  <div>
+    <button style="color:rgb(255, 255, 255)" pButton pRipple label="Finalizar Triaje" type="button" (click)="endTriaje()" class="p-button-outlined" icon="pi pi-check"></button>
   </div>
 </div>
 

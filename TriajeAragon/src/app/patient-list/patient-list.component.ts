@@ -24,11 +24,9 @@ export class PatientListComponent implements OnInit {
   getSinglePatient(){
     this.patientService.getRandomPatient().subscribe((result) =>{
       result.forEach(pat => {
-        console.log('a');
         let newPat:Patient = pat;
         this.patientList.push(newPat);
       });
-      console.log(this.patientList);
     });
   }
 
@@ -43,6 +41,16 @@ export class PatientListComponent implements OnInit {
   closeTriajeForm(event){
     this.displayTriaje = false;
     this.selectedPatient = null;
+  }
+
+  deletePatient(event: number){
+    let newPatientList = [];
+    this.patientList.forEach(patient => {
+      if(patient.id !== event){
+        newPatientList.push(patient);
+      }
+    });
+    this.patientList = newPatientList;
   }
 
   ngOnInit(): void {}

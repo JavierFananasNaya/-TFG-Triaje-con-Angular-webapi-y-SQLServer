@@ -30,6 +30,12 @@
   margin-right: 100px;
 }
 
+.noPatients{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
 /* .generateButton{
   background-color: rgb(177, 207, 184);
 } */

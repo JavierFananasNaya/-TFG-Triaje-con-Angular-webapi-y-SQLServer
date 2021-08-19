@@ -2,14 +2,17 @@
   <h1>LISTADO DE PACIENTES</h1>
 </div>
 
-<div >
+<div *ngIf="patientList.length > 0">
   <p-listbox [options]="patientList" [(ngModel)]="selectedPatient" [listStyle]="{'max-height':'250px'}" optionLabel="name">
     <ng-template let-patient pTemplate="item">
       <div class="patient-item">
           <div>{{patient.surname}}, {{patient.name}}</div>
       </div>
-  </ng-template>
+    </ng-template>
   </p-listbox>
+</div>
+<div *ngIf="patientList.length === 0" class="noPatients">
+  <h4>Ningún paciente por triar actualmente</h4>
 </div>
 <br/>
 <div class="generateButtonDiv">
@@ -23,5 +26,5 @@
 
 <p-dialog #triajeDialog  [(visible)]="displayTriaje" [modal]="true" [style]="{width: '50vw'}" [closable]="false" [baseZIndex]="10000"
     [draggable]="false" [resizable]="false">
-    <triaje-form [patient]="selectedPatient" (closeEvent)="closeTriajeForm($event)"></triaje-form>
+    <triaje-form [patient]="selectedPatient" (closeEvent)="closeTriajeForm($event)" (deletePatientFromList)="deletePatient($event)"></triaje-form>
 </p-dialog>
