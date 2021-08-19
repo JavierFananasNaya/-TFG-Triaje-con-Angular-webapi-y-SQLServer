@@ -31,12 +31,4 @@ export class PatientServiceService {
     deletePatient(patientId:any){
       return this.http.delete(this.APiUrl+'/patient',patientId);
     }
-
-    addPatientToVital(patientToAdd:SpecialityListPatient){
-      return this.http.post(this.APiUrl+'/vital',patientToAdd);
-    }
-
-    addPatientToMedicalSpeciality(patientToAdd:SpecialityListPatient){
-      return this.http.post(this.APiUrl+'/medicalSpeciality',patientToAdd);
-    }
 }

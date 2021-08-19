@@ -10,6 +10,8 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { PatientServiceService } from './patient-service.service';
 import { VitalServiceService } from './vital-service.service';
+import { MedicalSpecialityServiceService } from './medicalSpeciality-service.service';
+
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {ConfirmationService} from 'primeng/api';
@@ -52,7 +54,7 @@ import {RadioButtonModule} from 'primeng/radiobutton';
     SliderModule,
     RadioButtonModule
   ],
-  providers: [PatientServiceService,VitalServiceService, ConfirmationService],
+  providers: [PatientServiceService,VitalServiceService, ConfirmationService, MedicalSpecialityServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

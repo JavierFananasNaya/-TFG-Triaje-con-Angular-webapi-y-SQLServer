@@ -4,6 +4,9 @@ import { Patient } from '../models/patient';
 import { PatientVariables } from '../models/patientVariables';
 import { SpecialityListPatient } from '../models/SpecialityListPatient';
 import { PatientServiceService } from '../patient-service.service';
+import { VitalServiceService } from '../vital-service.service';
+import { MedicalSpecialityServiceService } from '../medicalSpeciality-service.service';
+
 
 
 @Component({
@@ -37,7 +40,7 @@ export class TriajeFormComponent implements OnInit {
 
   patientVariables: PatientVariables;
 
-  constructor( private confirmationService: ConfirmationService, private patientService: PatientServiceService) {
+  constructor( private confirmationService: ConfirmationService, private patientService: PatientServiceService, private vitalServiceService: VitalServiceService, private medicalSpecialityServiceService: MedicalSpecialityServiceService) {
     this.patient = new Patient();
     this.specialityListPatient = new SpecialityListPatient(); // Usaremos este objeto para registrar al paciente en la lista
     this.patientVariables = new PatientVariables();
@@ -292,9 +295,9 @@ export class TriajeFormComponent implements OnInit {
     console.log(this.specialityListPatient);
     // Comprobamos si se le envía a especialidad médica o a vitales
     if(this.destination === "Especialidad Médica"){
-      this.patientService.addPatientToMedicalSpeciality(this.specialityListPatient).subscribe();
+      this.medicalSpecialityServiceService.addPatientToMedicalSpeciality(this.specialityListPatient).subscribe();
     }else if(this.destination === "Vitales"){
-      this.patientService.addPatientToVital(this.specialityListPatient).subscribe();
+      this.vitalServiceService.addPatientToVital(this.specialityListPatient).subscribe();
     }
     this.deletePatientFromList.emit(this.patient.id);
     this.closeFormFunction();
