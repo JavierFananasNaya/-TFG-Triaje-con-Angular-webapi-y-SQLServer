@@ -19,6 +19,7 @@ namespace webAPI.Controllers
                 select vpl.id, p.id as patient_id, p.name, p.surname, vpl.arrival_time, vpl.urgency_level 
                 from vitalPatientsList vpl 
                 inner join pacientes p ON vpl.patient_id = p.id
+                ORDER BY vpl.urgency_level, vpl.arrival_time
             ";
             DataTable table = new DataTable();
 

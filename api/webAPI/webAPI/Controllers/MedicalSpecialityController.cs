@@ -20,6 +20,7 @@ namespace webAPI.Controllers
                 select mpl.id, p.id as patient_id, p.name, p.surname, mpl.arrival_time, mpl.urgency_level 
                 from MedicalPatientsList mpl 
                 inner join pacientes p ON mpl.patient_id = p.id
+                ORDER BY mpl.urgency_level, mpl.arrival_time
             ";
             DataTable table = new DataTable();
 

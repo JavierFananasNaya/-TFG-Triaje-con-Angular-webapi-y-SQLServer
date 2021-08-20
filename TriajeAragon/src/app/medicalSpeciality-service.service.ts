@@ -13,7 +13,7 @@ export class MedicalSpecialityServiceService {
 
   constructor(private http:HttpClient) {}
     getPatientList():Observable<any[]>{
-      return this.http.get<Patient[]>(this.APiUrl+'/medicalSpeciality');
+      return this.http.get<SpecialityListPatient[]>(this.APiUrl+'/medicalSpeciality');
     }
 
     addPatientToMedicalSpeciality(patientToAdd:SpecialityListPatient){

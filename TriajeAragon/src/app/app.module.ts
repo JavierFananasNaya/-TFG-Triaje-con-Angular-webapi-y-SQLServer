@@ -18,15 +18,18 @@ import {ConfirmationService} from 'primeng/api';
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { TriajeFormComponent } from './triaje-form/triaje-form.component';
+import { SpecificListComponent } from './specific-list/specific-list.component';
+
 //PRIME NG MODULES
 
 import {ListboxModule} from 'primeng/listbox';
 import {DialogModule} from 'primeng/dialog';
-import { TriajeFormComponent } from './triaje-form/triaje-form.component';
 import {ConfirmPopupModule} from 'primeng/confirmpopup';
 import {InputNumberModule} from 'primeng/inputnumber';
 import {SliderModule} from 'primeng/slider';
 import {RadioButtonModule} from 'primeng/radiobutton';
+import {TableModule} from 'primeng/table';
 
 
 @NgModule({
@@ -36,6 +39,7 @@ import {RadioButtonModule} from 'primeng/radiobutton';
     // LoginComponent,
     HomeComponent,
     TriajeFormComponent,
+    SpecificListComponent,
 
   ],
   imports: [
@@ -52,7 +56,8 @@ import {RadioButtonModule} from 'primeng/radiobutton';
     ConfirmPopupModule,
     InputNumberModule,
     SliderModule,
-    RadioButtonModule
+    RadioButtonModule,
+    TableModule
   ],
   providers: [PatientServiceService,VitalServiceService, ConfirmationService, MedicalSpecialityServiceService],
   bootstrap: [AppComponent]

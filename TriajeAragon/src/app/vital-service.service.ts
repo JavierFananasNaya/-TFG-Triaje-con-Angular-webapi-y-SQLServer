@@ -13,7 +13,7 @@ export class VitalServiceService {
 
   constructor(private http:HttpClient) {}
     getPatientList():Observable<any[]>{
-      return this.http.get<Patient[]>(this.APiUrl+'/vital');
+      return this.http.get<SpecialityListPatient[]>(this.APiUrl+'/vital');
     }
 
     addPatientToVital(patientToAdd:SpecialityListPatient){

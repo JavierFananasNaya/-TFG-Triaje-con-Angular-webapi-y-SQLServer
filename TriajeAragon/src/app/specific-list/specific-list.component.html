@@ -1,0 +1,27 @@
+<div>
+  <!-- <p-listbox [options]="listOfPatients" [(ngModel)]="selectedPatient" [listStyle]="{'max-height':'250px'}" optionLabel="name">
+    <ng-template let-patient pTemplate="item">
+      <div class="patient-item">
+          <div>{{patient.surname}}, {{patient.name}}</div>
+      </div>
+    </ng-template>
+  </p-listbox> -->
+
+  <p-table [value]="listOfPatients">
+    <ng-template pTemplate="header">
+      <tr>
+          <th *ngFor="let col of patientListCols">
+              {{col.header}}
+          </th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-patient>
+    <tr>
+        <td *ngFor="let col of patientListCols">
+                {{patient[col.field]}}
+        </td>
+    </tr>
+</ng-template>
+</p-table>
+
+</div>

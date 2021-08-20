@@ -1,5 +1,7 @@
 <div class="title">
   <h1>LISTADO DE PACIENTES</h1>
+  <button pButton pRipple type="button" label="L.E. Vitales" class="p-button-raised p-button-help" (click)="openSpecificPatientList(0)"></button>
+  <button pButton pRipple type="button" label="L.E. Especialidad Médica" class="p-button-raised p-button-help" (click)="openSpecificPatientList(1)"></button>
 </div>
 
 <div *ngIf="patientList.length > 0">
@@ -27,4 +29,14 @@
 <p-dialog #triajeDialog  [(visible)]="displayTriaje" [modal]="true" [style]="{width: '50vw'}" [closable]="false" [baseZIndex]="10000"
     [draggable]="false" [resizable]="false">
     <triaje-form [patient]="selectedPatient" (closeEvent)="closeTriajeForm($event)" (deletePatientFromList)="deletePatient($event)"></triaje-form>
+</p-dialog>
+
+<p-dialog [(visible)]="displaySpecificList">
+  <ng-template pTemplate="header">
+    <h2>Lista de pacientes</h2>
+  </ng-template>
+  <specific-list [listOfPatients]="specificListOfPatients"></specific-list>
+  <!-- <p-footer>
+      //buttons
+  </p-footer> -->
 </p-dialog>
