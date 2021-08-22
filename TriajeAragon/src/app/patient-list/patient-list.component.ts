@@ -32,7 +32,11 @@ export class PatientListComponent implements OnInit {
     this.patientService.getRandomPatient().subscribe((result) =>{
       result.forEach(pat => {
         let newPat:Patient = pat;
-        this.patientList.push(newPat);
+        if(this.patientList.findIndex(x => x.id === newPat.id) !== -1){
+          this.getSinglePatient();
+        }else{
+          this.patientList.push(newPat);
+        }
       });
     });
   }
