@@ -1,0 +1,22 @@
+<p-card>
+  <ng-template pTemplate="header">
+      LOGIN
+  </ng-template>
+  <form role="form" #loginForm="ngForm">
+    <div class="p-inputgroup">
+      <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+      <input type="text" pInputText placeholder="Usuario*" [ngModelOptions]="{standalone: true}" [(ngModel)]="user.nick">
+    </div>
+
+    <p-password [(ngModel)]="passwordInput" placeholder="Contraseña*" [ngModelOptions]="{standalone: true}" [toggleMask]="true" [feedback]="false"></p-password>
+  </form>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple type="button" label="Log-in" class="p-button-rounded" style="width: 300px; height: 60px; font-size: 24px;" (click)="logIn(loginForm)"></button>
+  </ng-template>
+  <div></div>
+  <p-messages *ngIf="error.length > 0" severity="error">
+    <ng-template pTemplate>
+        <div class="p-ml-2">{{error}}</div>
+    </ng-template>
+</p-messages>
+</p-card>

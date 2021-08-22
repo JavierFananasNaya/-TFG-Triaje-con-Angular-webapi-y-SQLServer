@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { PatientServiceService } from './patient-service.service';
 import { VitalServiceService } from './vital-service.service';
 import { MedicalSpecialityServiceService } from './medicalSpeciality-service.service';
+import { UserServiceService } from './users-service.service';
 
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -30,6 +31,11 @@ import {InputNumberModule} from 'primeng/inputnumber';
 import {SliderModule} from 'primeng/slider';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {TableModule} from 'primeng/table';
+import { LogInComponent } from './log-in/log-in.component';
+import {CardModule} from 'primeng/card';
+import {PasswordModule} from 'primeng/password';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
 
 
 @NgModule({
@@ -40,6 +46,7 @@ import {TableModule} from 'primeng/table';
     HomeComponent,
     TriajeFormComponent,
     SpecificListComponent,
+    LogInComponent,
 
   ],
   imports: [
@@ -57,9 +64,13 @@ import {TableModule} from 'primeng/table';
     InputNumberModule,
     SliderModule,
     RadioButtonModule,
-    TableModule
+    TableModule,
+    CardModule,
+    PasswordModule,
+    MessagesModule,
+    MessageModule
   ],
-  providers: [PatientServiceService,VitalServiceService, ConfirmationService, MedicalSpecialityServiceService],
+  providers: [PatientServiceService,VitalServiceService, ConfirmationService, MedicalSpecialityServiceService, UserServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
