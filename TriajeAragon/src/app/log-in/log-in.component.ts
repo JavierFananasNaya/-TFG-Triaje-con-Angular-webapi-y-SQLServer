@@ -40,7 +40,6 @@ export class LogInComponent implements OnInit {
 
   checkUser(){
     this.userServiceService.checkUser(this.user).subscribe(result =>{
-      console.log(result);
       if(result.length > 0){
         if(this.checkPassword(result[0].password)){
           localStorage.setItem('currentUser', JSON.stringify(result[0]));
@@ -48,30 +47,18 @@ export class LogInComponent implements OnInit {
         this.error = '';
         }else{
           this.error = 'Usuario o contraseña incorrectos. Por favor, revise sus datos e intentelo de nuevo.'
-          console.log('pues no sosio');
         }
-      }else{
+      }else{ // Si el usuario no existe también debemos sacar el error.
         this.error = 'Usuario o contraseña incorrectos. Por favor, revise sus datos e intentelo de nuevo.'
-          console.log('pues no sosio');
       }
-      // if(result.length > 0 && result[0].id !== null &&  (typeof result[0].id !== 'undefined')){ // Si el usuario que hemos comprobado es correcto
-      //   localStorage.setItem('currentUser', JSON.stringify(result[0]));
-      //   this.router.navigate(['/patients']);
-      //   this.error = '';
-      // }else{
-      //   this.error = 'Usuario o contraseña incorrectos. Por favor, revise sus datos e intentelo de nuevo.'
-      //   console.log('pues no sosio');
-      // }
     });
   }
 
   checkPassword(passwordToCheck: string):boolean{
     let decryptedPassword = CryptoJS.AES.decrypt(passwordToCheck.trim(), Config.encryptKey.trim()).toString(CryptoJS.enc.Utf8);
     if(decryptedPassword === this.passwordInput){
-      console.log('si mi pana');
       return true;
     }else{
-      console.log('no mi pana');
       return false;
     }
   }
