@@ -110,8 +110,8 @@ export class TriajeFormComponent implements OnInit {
         options: [
           { label: 'Herida de arma de fuego', value: true },
           { label: 'Herida de arma blanca', value: true },
-          { label: 'Física', value: true },
-          { label: 'Sexual', value: true },
+          { label: 'Física', value: false },
+          { label: 'Sexual', value: false },
         ],
       },
     ];
@@ -184,6 +184,13 @@ export class TriajeFormComponent implements OnInit {
           break;
         }
       }
+      case 5: {
+        if(answer === true){
+          this.sendTovitalDepartment();
+        }else{
+          this.sendToMedicalSpeciallityUrgent();
+        }
+      }
     }
   }
 
@@ -201,6 +208,13 @@ export class TriajeFormComponent implements OnInit {
   sendTovitalDepartment() {
     this.patientLevel = this.urgencyLevels[this.urgencyLevels.findIndex(x => x.level === 1)];
     this.destination = 'Vitales';
+    this.quickQuestions = false;
+    this.finalResponse = true;
+  }
+
+  sendToMedicalSpeciallityUrgent(){
+    this.patientLevel = this.urgencyLevels[this.urgencyLevels.findIndex(x => x.level === 3)];
+    this.destination = 'Especialidad Médica';
     this.quickQuestions = false;
     this.finalResponse = true;
   }
