@@ -2,10 +2,12 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 import { Patient } from '../models/patient';
 import { PatientVariables } from '../models/patientVariables';
+import { PatientsRecordData } from '../models/patientsRecordData';
 import { SpecialityListPatient } from '../models/SpecialityListPatient';
 import { PatientServiceService } from '../patient-service.service';
 import { VitalServiceService } from '../vital-service.service';
 import { MedicalSpecialityServiceService } from '../medicalSpeciality-service.service';
+import { PatientsRecordServiceService } from '../patientsRecord-service.service';
 
 
 
@@ -23,6 +25,7 @@ export class TriajeFormComponent implements OnInit {
   finalResponse: boolean;
   evaScale:boolean;
   step: number;
+  reason: string; // La razón por la que el paciente ha acudido a urgencias.
 
   // booleans to control the decision over the quick questions
   breathing: boolean;
@@ -37,14 +40,15 @@ export class TriajeFormComponent implements OnInit {
   evaScaleValue: number;
   evaScaleOptions: any[];
   specialityListPatient: SpecialityListPatient;
+  recordsPatient: PatientsRecordData;
 
   patientVariables: PatientVariables;
 
-  constructor( private confirmationService: ConfirmationService, private patientService: PatientServiceService, private vitalServiceService: VitalServiceService, private medicalSpecialityServiceService: MedicalSpecialityServiceService) {
+  constructor( private confirmationService: ConfirmationService, private patientService: PatientServiceService, private vitalServiceService: VitalServiceService, private medicalSpecialityServiceService: MedicalSpecialityServiceService, private patientsRecordServiceService: PatientsRecordServiceService) {
     this.patient = new Patient();
     this.specialityListPatient = new SpecialityListPatient(); // Usaremos este objeto para registrar al paciente en la lista
     this.patientVariables = new PatientVariables();
-
+    this.recordsPatient = new PatientsRecordData();
     this.evaScaleOptions = [
       {name:'0', value: 0},
       {name:'1', value: 1},
@@ -110,8 +114,8 @@ export class TriajeFormComponent implements OnInit {
         options: [
           { label: 'Herida de arma de fuego', value: true },
           { label: 'Herida de arma blanca', value: true },
-          { label: 'Física', value: false },
-          { label: 'Sexual', value: false },
+          { label: 'Agresión física', value: false },
+          { label: 'Agresión sexual', value: false },
         ],
       },
     ];
@@ -122,6 +126,7 @@ export class TriajeFormComponent implements OnInit {
     this.finalResponse = false;
     this.evaScale = false;
     this.closeForm = false;
+    this.reason = '';
 
     this.evaScaleValue = 0;
     this.patientLevel = this.urgencyLevels[this.urgencyLevels.length - 1];
@@ -129,11 +134,11 @@ export class TriajeFormComponent implements OnInit {
     this.destination = '';
   }
 
-  nextStep(answer: boolean) {
+  nextStep(question: any) {
     switch (this.step) {
       case 0: {
         // Breathing
-        if (answer === true) {
+        if (question.value === true) {
           this.breathing = true;
           this.step = 1;
           break;
@@ -145,19 +150,20 @@ export class TriajeFormComponent implements OnInit {
       }
       case 1: {
         // Conscious
-        if (answer === true) {
+        if (question.value === true) {
           this.conscious = true;
           this.step = 2;
           break;
         } else {
           this.conscious = false;
           this.sendTovitalDepartment();
+          this.updateReason(question);
           break;
         }
       }
       case 2: {
         // Accident
-        if (answer === true) {
+        if (question.value === true) {
           this.accident = true;
           this.step = 3; // Cause of the accident screen
           break;
@@ -170,13 +176,14 @@ export class TriajeFormComponent implements OnInit {
       case 3: {
         // Cause of the accident
         this.sendTovitalDepartment();
+        this.updateReason(question);
         break;
       }
       case 4: {
         // Agression
-        if (answer === true) {
+        if (question.value === true) {
           this.accident = true;
-          this.step = 5; // type of agression
+          this.step = 5; // agression question
           break;
         } else {
           this.accident = false;
@@ -185,13 +192,34 @@ export class TriajeFormComponent implements OnInit {
         }
       }
       case 5: {
-        if(answer === true){
+        // Type of agression
+        if(question.value === true){
           this.sendTovitalDepartment();
+          this.updateReason(question);
         }else{
           this.sendToMedicalSpeciallityUrgent();
+          this.updateReason(question);
         }
       }
     }
+  }
+
+  updateReason(question: any) { // Actualiza la razón de acudir a urgencia antes de derivar al paciente
+    if(this.breathing === false){
+      this.reason += 'El paciente no respira con normalidad. ';
+    }
+    if( this.conscious === false){
+      this.reason += 'El paciente no se encuentra consciente. ';
+    }
+    // Después de comprobar su estado se añade la causa
+    if(this.patientLevel.level <= 3){
+      if(this.conscious === true){
+        this.reason += question.label+'.';
+      }
+    }else{
+      this.reason += 'Molestia general menor.'
+    }
+    console.log(this.reason);
   }
 
   previousStep() {
@@ -201,7 +229,18 @@ export class TriajeFormComponent implements OnInit {
         this.step = 2;
       } else {
         this.step--;
+        switch (this.step){
+          case 1:{
+            this.conscious = false;
+            break;
+          }
+          case (3 || 5): {
+            this.reason = '';
+            break;
+          }
+        }
       }
+
     }
   }
 
@@ -225,25 +264,32 @@ export class TriajeFormComponent implements OnInit {
     if(this.patientVariables.temperature){
       if((this.patientVariables.temperature > 37) && (this.patientVariables.temperature < 38)){
         this.patientLevel = this.urgencyLevels[this.urgencyLevels.findIndex(x => x.level === 3)];
+        this.reason += 'Fiebre. ';
       }else if(this.patientVariables.temperature > 39){
+        this.reason += 'Fiebre  excesivamente alta. ';
         this.patientLevel = this.urgencyLevels[this.urgencyLevels.findIndex(x => x.level === 2)];
       }
     }
 
     if(this.patientVariables.oSaturation && this.patientVariables.oSaturation < 95 && this.patientLevel.level > 2){
+      this.reason += 'Baja saturación de oxígeno en sangre. ';
       this.patientLevel = this.urgencyLevels[this.urgencyLevels.findIndex(x => x.level === 2)];
     }
 
     if(this.patientVariables.heartRate && this.patientVariables.heartRate > 120 && this.patientLevel.level > 2){
+      this.reason += 'Frecuencia cardiaca alta. ';
       this.patientLevel = this.urgencyLevels[this.urgencyLevels.findIndex(x => x.level === 2)];
     }
 
     if(this.patientVariables.sistolePreasure && this.patientVariables.diastolePreasure){
       if((this.patientVariables.sistolePreasure < 80 && this.patientVariables.diastolePreasure < 60) && this.patientLevel.level > 3){
         this.patientLevel = this.urgencyLevels[this.urgencyLevels.findIndex(x => x.level === 3)];
+        this.reason += 'Presión sanguínea atípica. ';
       }else if((this.patientVariables.sistolePreasure >= 160 && this.patientVariables.sistolePreasure < 180) && (this.patientVariables.diastolePreasure >= 100 && this.patientVariables.diastolePreasure < 180) && this.patientLevel.level > 2){
+        this.reason += 'Presión sanguínea alarmante. ';
         this.patientLevel = this.urgencyLevels[this.urgencyLevels.findIndex(x => x.level === 2)];
       }else if(this.patientVariables.sistolePreasure >= 180 && this.patientVariables.diastolePreasure > 110 && this.patientLevel.level > 1){
+        this.reason += 'Presión sanguínea excesivamente urgente. ';
         this.sendTovitalDepartment();
       }
     }
@@ -260,6 +306,8 @@ export class TriajeFormComponent implements OnInit {
 
   checkEvaScale(){
       if(this.evaScaleValue < 7){
+        let evaQuestion = {label: 'Molestia general menor.', value: true};
+        this.updateReason(evaQuestion);
         this.finalResponse = true;
         this.evaScale = false;
         return;
@@ -267,13 +315,17 @@ export class TriajeFormComponent implements OnInit {
       if (this.evaScaleValue >= 7 && this.evaScaleValue <= 8) {
         //Nivel de urgencia urgente
         this.patientLevel = this.urgencyLevels[this.urgencyLevels.findIndex(x => x.level === 3)];
+        let evaQuestion = {label: 'Molestia moderada', value: true};
+        this.updateReason(evaQuestion);
         this.finalResponse = true;
         this.evaScale = false;
         return;
       }
       if(this.evaScaleValue > 8) {
         //Nivel de urgencia muy urgente
+        let evaQuestion = {label: 'Molestia aguda', value: true};
         this.patientLevel = this.urgencyLevels[this.urgencyLevels.findIndex(x => x.level === 2)];
+        this.updateReason(evaQuestion);
         this.finalResponse = true;
         this.evaScale = false;
         return;
@@ -299,14 +351,16 @@ export class TriajeFormComponent implements OnInit {
     this.patientVariables = new PatientVariables();
     this.patientLevel = this.urgencyLevels[this.urgencyLevels.length - 1];
     this.step = 0;
+    this.reason = '';
     this.destination = '';
   }
 
   endTriaje(){
+    this.buildRecordPatient();
+    this.addPatientToRecord();
     this.specialityListPatient.urgencyLevel = this.patientLevel.level;
     this.specialityListPatient.patient_id = this.patient.id;
     this.specialityListPatient.arrivalTime = new Date();
-    console.log(this.specialityListPatient);
     // Comprobamos si se le envía a especialidad médica o a vitales
     if(this.destination === "Especialidad Médica"){
       this.medicalSpecialityServiceService.addPatientToMedicalSpeciality(this.specialityListPatient).subscribe();
@@ -315,9 +369,42 @@ export class TriajeFormComponent implements OnInit {
     }
     this.deletePatientFromList.emit(this.patient.id);
     this.closeFormFunction();
-    console.log('PROGRAMAR EL FINAL DE TRIAJE. Añadir a la lista de espera correspondiente PERRO');
   }
 
+  addPatientToRecord(){
+    this.buildRecordPatient();
+    this.patientsRecordServiceService.addPatientToMedicalSpeciality(this.recordsPatient).subscribe(result =>{
+      this.resetTriaje();
+    });
+  }
+
+  buildRecordPatient(){
+    this.recordsPatient.patient_id = this.patient.id;
+    this.recordsPatient.urgency_level = this.patientLevel.level;
+    this.recordsPatient.arrivalTime = new Date();
+    this.recordsPatient.cause = this.reason;
+    if(this.patientVariables.oSaturation && (typeof this.patientVariables.oSaturation !== 'undefined')){
+      this.recordsPatient.oSaturation = this.patientVariables.oSaturation;
+    }else{
+      this.recordsPatient.oSaturation = null;
+    }
+    if(this.patientVariables.temperature && (typeof this.patientVariables.temperature !== 'undefined')){
+      this.recordsPatient.temperature = this.patientVariables.temperature;
+    }else{
+      this.recordsPatient.temperature = null;
+    }
+    if(this.patientVariables.sistolePreasure && (typeof this.patientVariables.sistolePreasure !== 'undefined')){
+      this.recordsPatient.sistolePreasure = this.patientVariables.sistolePreasure;
+    }else{
+      this.recordsPatient.sistolePreasure = null;
+    }
+    if(this.patientVariables.diastolePreasure && (typeof this.patientVariables.diastolePreasure !== 'undefined')){
+      this.recordsPatient.diastolePreasure = this.patientVariables.diastolePreasure;
+    }else{
+      this.recordsPatient.diastolePreasure = null;
+    }
+    console.log(this.recordsPatient);
+  }
   confirm(event: Event) {
     this.confirmationService.confirm({
         target: event.target,

@@ -12,6 +12,7 @@ import { PatientServiceService } from './patient-service.service';
 import { VitalServiceService } from './vital-service.service';
 import { MedicalSpecialityServiceService } from './medicalSpeciality-service.service';
 import { UserServiceService } from './users-service.service';
+import { PatientsRecordServiceService } from './patientsRecord-service.service';
 
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -70,7 +71,7 @@ import {MessageModule} from 'primeng/message';
     MessagesModule,
     MessageModule
   ],
-  providers: [PatientServiceService,VitalServiceService, ConfirmationService, MedicalSpecialityServiceService, UserServiceService],
+  providers: [PatientServiceService,VitalServiceService, ConfirmationService, MedicalSpecialityServiceService, UserServiceService, PatientsRecordServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

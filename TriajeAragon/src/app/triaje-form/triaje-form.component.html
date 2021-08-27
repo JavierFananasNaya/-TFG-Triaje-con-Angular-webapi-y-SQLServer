@@ -18,7 +18,7 @@
   <div class="answerContainer">
     <ng-container *ngFor="let option of questions[step].options">
       <div class="answer">
-        <button pButton pRipple type="button" label="{{ option.label }}" (click)="nextStep(option.value)" class="p-button-outlined"></button>
+        <button pButton pRipple type="button" label="{{ option.label }}" (click)="nextStep(option)" class="p-button-outlined"></button>
       </div>
     </ng-container>
   </div>
