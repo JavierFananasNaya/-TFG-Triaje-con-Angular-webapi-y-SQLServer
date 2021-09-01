@@ -1,6 +1,7 @@
 <div class="header">
   <div>
-    <h3 *ngIf="patient !== null">{{ patient.surname }}, {{ patient.name }}</h3>
+    <h3 *ngIf="patient !== null">{{ patient.surname }}, {{ patient.name }} </h3><button pButton pRipple type="button" icon="pi pi-info-circle" (click)="showPatientInfo()" class="p-button-outlined"></button>
+
   </div>
   <div>
     <p-button
@@ -106,3 +107,8 @@
 </div>
 
 <p-confirmPopup [baseZIndex]="100000"></p-confirmPopup>
+
+<p-dialog header="Información del paciente" [(visible)]="displayPatientInfo" [modal]="true" [style]="{width: '75%'}"
+    [draggable]="false" [resizable]="false">
+    <patient-info [patient]="patient"></patient-info>
+</p-dialog>

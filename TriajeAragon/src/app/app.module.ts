@@ -37,6 +37,7 @@ import {CardModule} from 'primeng/card';
 import {PasswordModule} from 'primeng/password';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
+import { PatientInfoComponent } from './patient-info/patient-info.component';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import {MessageModule} from 'primeng/message';
     TriajeFormComponent,
     SpecificListComponent,
     LogInComponent,
+    PatientInfoComponent,
 
   ],
   imports: [

@@ -24,6 +24,7 @@ export class TriajeFormComponent implements OnInit {
   quickQuestions: boolean;
   finalResponse: boolean;
   evaScale:boolean;
+  displayPatientInfo: boolean;
   step: number;
   reason: string; // La razón por la que el paciente ha acudido a urgencias.
 
@@ -126,6 +127,7 @@ export class TriajeFormComponent implements OnInit {
     this.finalResponse = false;
     this.evaScale = false;
     this.closeForm = false;
+    this.displayPatientInfo = false;
     this.reason = '';
 
     this.evaScaleValue = 0;
@@ -417,5 +419,8 @@ export class TriajeFormComponent implements OnInit {
            return;
         }
     });
-}
+  }
+  showPatientInfo(){
+    this.displayPatientInfo = true;
+  }
 }

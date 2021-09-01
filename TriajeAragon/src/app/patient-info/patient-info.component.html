@@ -1,0 +1,55 @@
+<ng-container *ngIf="patient !== null" >
+  <h2>{{patient.name}}</h2>
+  <div>
+    <h4>Nombre y apellidos</h4>
+    <div>{{patient.name}}, {{patient.surname}}</div>
+  </div>
+  <div>
+    <h4>Género</h4>
+    <div>{{patient.genre}}</div>
+  </div>
+  <div>
+    <h4>Fecha de nacimiento</h4>
+    <div>{{patient.bornDate | date:'dd/MM/yyyy' }}</div>
+  </div>
+  <div>
+    <h4>Número aficiliación  SS</h4>
+    <div>{{patient.SSNumber}}</div>
+  </div>
+  <div>
+    <h4>Grupo sanguíneo</h4>
+    <div>{{patient.bloodType}}</div>
+  </div>
+  <div>
+    <h4>Dirección</h4>
+    <div>{{patient.adress}}, {{patient.postalCode}}</div>
+  </div>
+  <div>
+    <h4>Teléfono</h4>
+    <div>{{patient.phoneNumber}}</div>
+  </div>
+
+  <ng-container *ngIf="patientRecord.length > 0">
+    <p-table [columns]="recordsCols" [value]="patientRecord" [scrollable]="true" [rows]="100" scrollHeight="250px"
+        [virtualScroll]="true" [virtualRowHeight]="40">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns">
+                    {{col.header}}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
+            <tr style="height:40px">
+                <td *ngFor="let col of columns">
+                    {{rowData[col.field]}}
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+  </ng-container>
+
+  <ng-container *ngIf="patientRecord.length === 0">
+    <h4>Este paciente no ha visitado urgencias con anterioridad</h4>
+  </ng-container>
+</ng-container>

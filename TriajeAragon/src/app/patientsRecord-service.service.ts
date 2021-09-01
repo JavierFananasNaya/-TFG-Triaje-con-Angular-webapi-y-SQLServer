@@ -20,4 +20,8 @@ export class PatientsRecordServiceService {
     addPatientToMedicalSpeciality(patientToAdd:PatientsRecordData){
       return this.http.put(this.APiUrl+'/patientsrecord',patientToAdd);
     }
+
+    getRecordFromPatient(patientToSearch: Patient){
+      return this.http.post<PatientsRecordData[]>(this.APiUrl+'/patientsrecord',patientToSearch);
+    }
 }
