@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 import { Patient } from '../models/patient';
 import { PatientVariables } from '../models/patientVariables';
@@ -8,7 +8,7 @@ import { PatientServiceService } from '../patient-service.service';
 import { VitalServiceService } from '../vital-service.service';
 import { MedicalSpecialityServiceService } from '../medicalSpeciality-service.service';
 import { PatientsRecordServiceService } from '../patientsRecord-service.service';
-
+import { PatientInfoComponent } from '../patient-info/patient-info.component';
 
 
 @Component({
@@ -20,6 +20,7 @@ export class TriajeFormComponent implements OnInit {
   @Input() patient: Patient;
   @Output() closeEvent = new EventEmitter<boolean>();
   @Output() deletePatientFromList = new EventEmitter<number>();
+  @ViewChild('infoComponent') infoComponent: PatientInfoComponent;
 
   quickQuestions: boolean;
   finalResponse: boolean;
@@ -422,5 +423,6 @@ export class TriajeFormComponent implements OnInit {
   }
   showPatientInfo(){
     this.displayPatientInfo = true;
+    this.infoComponent.getPatientInfo();
   }
 }

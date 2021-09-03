@@ -110,5 +110,5 @@
 
 <p-dialog header="Información del paciente" [(visible)]="displayPatientInfo" [modal]="true" [style]="{width: '75%'}"
     [draggable]="false" [resizable]="false">
-    <patient-info [patient]="patient"></patient-info>
+    <patient-info #infoComponent [patient]="patient"></patient-info>
 </p-dialog>

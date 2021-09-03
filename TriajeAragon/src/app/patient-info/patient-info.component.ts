@@ -16,6 +16,7 @@ export class PatientInfoComponent implements OnInit, OnChanges {
 
   constructor(private patientsRecordService: PatientsRecordServiceService) {
     this.patient = new Patient();
+    this.patientRecord = [];
     this.recordsCols = [
       { field: 'arrivalTime', header: 'Fecha' },
       { field: 'cause', header: 'Motivo' },
@@ -32,13 +33,17 @@ export class PatientInfoComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
-    if(changes.patient.currentValue !== null && changes.patient.currentValue.id){
-      this.patientsRecordService.getRecordFromPatient(this.patient).subscribe(result =>{
-        this.patientRecord = result;
-        console.log(this.patientRecord);
-      });
-    }
+    // if(changes.patient.currentValue !== null && changes.patient.currentValue.id){
+    //   this.patientsRecordService.getRecordFromPatient(this.patient).subscribe(result =>{
+    //     this.patientRecord = result;
+    //   });
+    // }
+  }
+
+  getPatientInfo(){
+    this.patientsRecordService.getRecordFromPatient(this.patient).subscribe(result =>{
+      this.patientRecord = result;
+    });
   }
 
 }
