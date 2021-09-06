@@ -1,22 +1,56 @@
-<p-card>
-  <ng-template pTemplate="header">
-      LOGIN
-  </ng-template>
-  <form role="form" #loginForm="ngForm">
-    <div class="p-inputgroup">
-      <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-      <input type="text" pInputText placeholder="Usuario*" [ngModelOptions]="{standalone: true}" [(ngModel)]="user.nick">
-    </div>
+<div class="container">
+  <div class="row loginRow">
+    <!-- <img [src]="https://ibb.co/ydVg8r1" width="500" height="600"> -->
+    <div class="col-sm-5">
+      <p-card class="loginCard">
+        <div class="row loginHeader">
+          <div>
+            <h3 class="loginTittle">Iniciar Sesión</h3>
+            <p>Te ayudamos a ayudar.</p>
+          </div>
+        </div>
+        <div class="row formRow">
+          <form role="form" #loginForm="ngForm">
+            <span class="p-float-label" style="margin-top: 10px; margin-bottom: 10px;">
+              <input class="inputLogin"
+                id="float-input"
+                type="text"
+                pInputText
+                [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="user.nick"
+              />
+              <label for="float-input">Usuario*</label>
+            </span>
+            <p-password
+              [(ngModel)]="passwordInput"
+              placeholder="Contraseña*"
+              [ngModelOptions]="{ standalone: true }"
+              [toggleMask]="true"
+              [feedback]="false"
+            ></p-password>
+          </form>
+        </div>
 
-    <p-password [(ngModel)]="passwordInput" placeholder="Contraseña*" [ngModelOptions]="{standalone: true}" [toggleMask]="true" [feedback]="false"></p-password>
-  </form>
-  <ng-template pTemplate="footer">
-    <button pButton pRipple type="button" label="Log-in" class="p-button-rounded" style="width: 300px; height: 60px; font-size: 24px;" (click)="logIn(loginForm)"></button>
-  </ng-template>
-  <div></div>
-  <p-messages *ngIf="error.length > 0" severity="error">
-    <ng-template pTemplate>
-        <div class="p-ml-2">{{error}}</div>
-    </ng-template>
-</p-messages>
-</p-card>
+        <ng-template pTemplate="footer">
+          <div class="row" style="justify-content: center;">
+            <button
+            pButton
+            pRipple
+            type="button"
+            label="Log-in"
+            class="p-button-rounded"
+            style="width: 300px; height: 60px; font-size: 24px"
+            (click)="logIn(loginForm)"
+            ></button>
+          </div>
+        </ng-template>
+        <div></div>
+        <p-messages *ngIf="error.length > 0" severity="error">
+          <ng-template pTemplate>
+            <div class="p-ml-2" style="font-size: small;">{{ error }}</div>
+          </ng-template>
+        </p-messages>
+      </p-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+.loginRow{
+  justify-content: center;
+}
+.loginTittle{
+  font-size: 2.2rem;
+    line-height: 1.25;
+    font-weight: 600;
+    color: rgba(0,0,0,0.9);
+    padding: 0 0 4px 0;
+}
+
+.loginHeader{
+  padding-left: 20px;
+}
+
+.inputLogin{
+  padding: 5px 19px 6px;
+}
+.formRow{
+  padding-left: 20px;
+}
+
+
