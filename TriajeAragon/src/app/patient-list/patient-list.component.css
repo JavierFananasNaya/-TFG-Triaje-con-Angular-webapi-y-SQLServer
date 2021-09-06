@@ -36,6 +36,14 @@
   align-content: center;
 }
 
+.listButtons{
+  padding: 5px;
+}
+
+.listButtonsRow{
+  justify-content: flex-end;
+}
+
 /* .generateButton{
   background-color: rgb(177, 207, 184);
 } */

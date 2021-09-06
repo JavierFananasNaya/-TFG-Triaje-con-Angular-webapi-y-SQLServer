@@ -1,34 +1,90 @@
-<div class="title">
-  <h1>LISTADO DE PACIENTES</h1>
-  <button pButton pRipple type="button" label="L.E. Vitales" class="p-button-raised p-button-help" (click)="openSpecificPatientList(0)"></button>
-  <button pButton pRipple type="button" label="L.E. Especialidad Médica" class="p-button-raised p-button-help" (click)="openSpecificPatientList(1)"></button>
+<div class="container">
+  <div class="row listButtonsRow">
+    <div class="listButtons">
+      <button
+        pButton
+        pRipple
+        type="button"
+        label="L.E. Vitales"
+        class="p-button-raised p-button-help"
+        (click)="openSpecificPatientList(0)"
+      ></button>
+    </div>
+    <div class="listButtons">
+      <button
+        pButton
+        pRipple
+        type="button"
+        label="L.E. Especialidad Médica"
+        class="p-button-raised p-button-help"
+        (click)="openSpecificPatientList(1)"
+      ></button>
+    </div>
+  </div>
+  <br/>
+  <br/>
+  <div class="row title">
+    <div class="col-lg-12">
+      <h1>LISTADO DE PACIENTES</h1>
+    </div>
+  </div>
+  <div *ngIf="patientList.length > 0">
+    <p-listbox
+      [options]="patientList"
+      [(ngModel)]="selectedPatient"
+      [listStyle]="{ 'max-height': '250px' }"
+      optionLabel="name"
+    >
+      <ng-template let-patient pTemplate="item">
+        <div class="patient-item">
+          <div>{{ patient.surname }}, {{ patient.name }}</div>
+        </div>
+      </ng-template>
+    </p-listbox>
+  </div>
+  <div *ngIf="patientList.length === 0" class="noPatients">
+    <h4>Ningún paciente por triar actualmente</h4>
+  </div>
+  <br />
+  <div class="generateButtonDiv">
+    <button
+      pButton
+      pRipple
+      type="button"
+      label="*Generar paciente*"
+      class="p-button-secondary p-button-rounded"
+      (click)="getSinglePatient()"
+    ></button>
+  </div>
+
+  <div class="startButtonDiv" *ngIf="selectedPatient !== null">
+    <button
+      pButton
+      pRipple
+      type="button"
+      label="COMENZAR TRIAJE"
+      class="p-button-rounded"
+      style="width: 300px; height: 60px; font-size: 24px"
+      (click)="openTriajeModal(); maximizeDialog(triajeDialog)"
+    ></button>
+  </div>
 </div>
 
-<div *ngIf="patientList.length > 0">
-  <p-listbox [options]="patientList" [(ngModel)]="selectedPatient" [listStyle]="{'max-height':'250px'}" optionLabel="name">
-    <ng-template let-patient pTemplate="item">
-      <div class="patient-item">
-          <div>{{patient.surname}}, {{patient.name}}</div>
-      </div>
-    </ng-template>
-  </p-listbox>
-</div>
-<div *ngIf="patientList.length === 0" class="noPatients">
-  <h4>Ningún paciente por triar actualmente</h4>
-</div>
-<br/>
-<div class="generateButtonDiv">
-  <button pButton pRipple type="button" label="*Generar paciente*" class="p-button-secondary p-button-rounded" (click)="getSinglePatient()"></button>
-</div>
-
-<div class="startButtonDiv" *ngIf="selectedPatient !== null">
-  <button pButton pRipple type="button" label="COMENZAR TRIAJE" class="p-button-rounded" style="width: 300px; height: 60px; font-size: 24px;" (click)="openTriajeModal(); maximizeDialog(triajeDialog)"></button>
-</div>
-
-
-<p-dialog #triajeDialog  [(visible)]="displayTriaje" [modal]="true" [style]="{width: '50vw'}" [closable]="false" [baseZIndex]="10000"
-    [draggable]="false" [resizable]="false">
-    <triaje-form [patient]="selectedPatient" (closeEvent)="closeTriajeForm($event)" (deletePatientFromList)="deletePatient($event)"></triaje-form>
+<p-dialog
+  #triajeDialog
+  [(visible)]="displayTriaje"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [closable]="false"
+  [baseZIndex]="10000"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <triaje-form
+    [patient]="selectedPatient"
+    (closeEvent)="closeTriajeForm($event)"
+    (deletePatientFromList)="deletePatient($event)"
+  ></triaje-form>
 </p-dialog>
 
 <p-dialog [(visible)]="displaySpecificList">
