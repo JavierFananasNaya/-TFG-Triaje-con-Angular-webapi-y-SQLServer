@@ -1,114 +1,254 @@
 <div class="header">
-  <div>
-    <h3 *ngIf="patient !== null">{{ patient.surname }}, {{ patient.name }} </h3><button pButton pRipple type="button" icon="pi pi-info-circle" (click)="showPatientInfo()" class="p-button-outlined"></button>
-
+  <div class="row">
+    <div class="col-lg-5">
+      <div class="row variablesFormRow">
+        <h3 *ngIf="patient !== null">
+          {{ patient.surname }}, {{ patient.name }}
+        </h3>
+        <button
+          pButton
+          pRipple
+          type="button"
+          icon="pi pi-info-circle"
+          (click)="showPatientInfo()"
+          class="p-button-outlined"
+        ></button>
+      </div>
+    </div>
+    <div class="col-lg-1"></div>
   </div>
-  <div>
+  <!-- <div>
     <p-button
       icon="pi pi-exclamation-triangle"
       label="TRIAJE COVID"
       styleClass="p-button-danger p-button-text"
     ></p-button>
-  </div>
+  </div> -->
 </div>
-
-<div class="quickQuestions" *ngIf="quickQuestions">
-  <div>
-    <h1>{{ questions[step].question }}</h1>
+<div class="body">
+  <div class="quickQuestions" *ngIf="quickQuestions">
+    <div>
+      <h1>{{ questions[step].question }}</h1>
+    </div>
+    <div class="answerContainer">
+      <ng-container *ngFor="let option of questions[step].options">
+        <div class="answer">
+          <button
+            pButton
+            pRipple
+            type="button"
+            label="{{ option.label }}"
+            (click)="nextStep(option)"
+            class="p-button-outlined"
+          ></button>
+        </div>
+      </ng-container>
+    </div>
+    <div style="align-self: flex-start">
+      <button
+        pButton
+        pRipple
+        type="button"
+        *ngIf="this.step > 0"
+        (click)="previousStep()"
+        class="p-button-outlined"
+        icon="pi pi-arrow-left"
+      ></button>
+    </div>
   </div>
-  <div class="answerContainer">
-    <ng-container *ngFor="let option of questions[step].options">
-      <div class="answer">
-        <button pButton pRipple type="button" label="{{ option.label }}" (click)="nextStep(option)" class="p-button-outlined"></button>
+  <div class="container" *ngIf="!quickQuestions && !evaScale && !finalResponse">
+    <div class="row">
+      <div class="col-lg-12 col-md-6">
+        <h2>Constantes del paciente</h2>
       </div>
-    </ng-container>
+    </div>
+    <div class="row variablesFormRow">
+      <div class="col-lg-3 variablesFormCol">
+        <span class="p-float-label">
+          <p-inputNumber
+            [(ngModel)]="patientVariables.oSaturation"
+            mode="decimal"
+            [showButtons]="true"
+            inputId="oxygenSaturation"
+            [min]="0"
+            [max]="100"
+          >
+          </p-inputNumber>
+          <label for="oxygenSaturation">Saturación de oxigeno</label>
+        </span>
+      </div>
+      <div class="col-lg-3 variablesFormCol">
+        <span class="p-float-label">
+          <p-inputNumber
+            [(ngModel)]="patientVariables.heartRate"
+            mode="decimal"
+            [showButtons]="true"
+            inputId="heartRate"
+          >
+          </p-inputNumber>
+          <label for="heartRate">Frecuencia cardiaca</label>
+        </span>
+      </div>
+      <div class="col-lg-3 variablesFormCol">
+        <span class="p-float-label">
+          <p-inputNumber
+            [(ngModel)]="patientVariables.temperature"
+            mode="decimal"
+            [showButtons]="true"
+            inputId="temperature"
+          >
+          </p-inputNumber>
+          <label for="temperature">Tª</label>
+        </span>
+      </div>
+    </div>
+    <br />
+    <div class="row variablesFormRow">
+      <div class="col-lg-3 variablesFormCol">
+        <span class="p-float-label">
+          <p-inputNumber
+            [(ngModel)]="patientVariables.sistolePreasure"
+            mode="decimal"
+            [showButtons]="true"
+            inputId="sistolePreasure"
+          >
+          </p-inputNumber>
+          <label for="sistolePreasure">Sistólica</label>
+        </span>
+      </div>
+      <div class="col-lg-3 variablesFormCol">
+        <span class="p-float-label">
+          <p-inputNumber
+            [(ngModel)]="patientVariables.diastolePreasure"
+            mode="decimal"
+            [showButtons]="true"
+            inputId="daistolePreasure"
+          >
+          </p-inputNumber>
+          <label for="bloodPressure">Diastólica</label>
+        </span>
+      </div>
+    </div>
+    <br />
+    <div class="row variablesFormRow">
+      <div class="col-lg-3 variablesFormCol">
+        <button
+          pButton
+          pRipple
+          type="button"
+          label="Comprobar constantes"
+          class="p-button-rounded"
+          style="width: 100%; height: 60px"
+          (click)="checkVariables()"
+        ></button>
+      </div>
+    </div>
   </div>
-  <div style="align-self: flex-start;">
-    <button pButton pRipple type="button" *ngIf="this.step > 0"  (click)="previousStep()" class="p-button-outlined" icon="pi pi-arrow-left">
-    </button>
-  </div>
-</div>
-<div class="variablesForm" *ngIf="(!quickQuestions) && (!evaScale) && (!finalResponse)">
-  <div>
-    <h2>Constantes del paciente</h2>
-  </div>
-  <div>
-    <span class="p-float-label">
-      <p-inputNumber [(ngModel)]="patientVariables.oSaturation" mode="decimal" [showButtons]="true" inputId="oxygenSaturation" [min]="0" [max]="100">
-      </p-inputNumber>
-      <label for="oxygenSaturation">Saturación de oxigeno</label>
-    </span>
-  </div>
-  <div>
-    <span class="p-float-label">
-      <p-inputNumber [(ngModel)]="patientVariables.heartRate" mode="decimal" [showButtons]="true" inputId="heartRate">
-      </p-inputNumber>
-      <label for="heartRate">Frecuencia cardiaca</label>
-    </span>
-  </div>
-  <div>
-    <span class="p-float-label">
-      <p-inputNumber [(ngModel)]="patientVariables.temperature" mode="decimal" [showButtons]="true" inputId="temperature">
-      </p-inputNumber>
-      <label for="temperature">Tª</label>
-    </span>
-  </div>
-  <div>
-    <span class="p-float-label">
-      <p-inputNumber [(ngModel)]="patientVariables.sistolePreasure" mode="decimal" [showButtons]="true" inputId="sistolePreasure">
-      </p-inputNumber>
-      <label for="sistolePreasure">Sistólica</label>
-    </span>
-  </div>
-  <div>
-    <span class="p-float-label">
-      <p-inputNumber [(ngModel)]="patientVariables.diastolePreasure" mode="decimal" [showButtons]="true" inputId="daistolePreasure">
-      </p-inputNumber>
-      <label for="bloodPressure">Diastólica</label>
-    </span>
-  </div>
-  <div>
-    <button pButton pRipple type="button" label="Comprobar constantes" class="p-button-rounded" style="width: 300px; height: 60px; font-size: 24px;" (click)="checkVariables()"></button>
-  </div>
-</div>
-<div *ngIf="evaScale">
-  <h4>Escala Eva del dolor</h4>
-  <!-- <p-inputNumber [(ngModel)]="evaScaleValue" [showButtons]="false">
+  <div *ngIf="evaScale">
+    <h4>Escala Eva del dolor</h4>
+    <!-- <p-inputNumber [(ngModel)]="evaScaleValue" [showButtons]="false">
   </p-inputNumber> -->
-  <div *ngFor="let option of evaScaleOptions" class="p-field-checkbox">
-    <p-radioButton [inputId]="option.value" name="option" [value]="option.value" [(ngModel)]="evaScaleValue"></p-radioButton>
-    <label [for]="option.value">{{option.name}}</label>
+    <div class="row buttonRow">
+      <div
+        *ngFor="let option of evaScaleOptions"
+        class="p-field-checkbox col-lg-1 col-md-2 col-sm-2"
+      >
+        <p-radioButton
+          [inputId]="option.value"
+          name="option"
+          [value]="option.value"
+          [(ngModel)]="evaScaleValue"
+        ></p-radioButton>
+        <label class="evaScaleLabel" [for]="option.value">{{
+          option.name
+        }}</label>
+      </div>
+    </div>
+    <br />
+    <div class="row buttonRow">
+      <button
+        pButton
+        pRipple
+        type="button"
+        label="Comprobar escala"
+        class="p-button-rounded"
+        style="width: 300px; height: 60px; font-size: 24px"
+        (click)="checkEvaScale()"
+      ></button>
+    </div>
   </div>
+
+  <div
+    [ngStyle]="{ 'background-color': patientLevel.color }"
+    class="body"
+    *ngIf="finalResponse"
+  >
+    <div class="row">
+      <div class="col-12 finalResponsenCol">
+        <h1 style="color: rgb(255, 255, 255)">{{ patientLevel.label }}</h1>
+      </div>
+    </div>
+    <div>
+      <div class="col-12 finalResponsenCol">
+        <h2 style="color: rgb(255, 255, 255)">
+          Especialidad: {{ destination }}
+        </h2>
+      </div>
+    </div>
+    <div>
+      <div class="col-12 finalResponsenCol">
+        <h3 style="color: rgb(255, 255, 255)">
+          Nivel de urgencia: {{ patientLevel.level }}
+        </h3>
+      </div>
+    </div>
+    <div class="row variablesFormRow">
+      <div class="col-lg-4 finalResponsenCol">
+        <button
+          style="color: rgb(255, 255, 255)"
+          pButton
+          pRipple
+          label="Volver"
+          type="button"
+          (click)="backToTriaje()"
+          class="p-button-outlined"
+          icon="pi pi-arrow-left"
+        ></button>
+      </div>
+      <div class="col-lg-4 finalResponsenCol">
+        <button
+          style="color: rgb(255, 255, 255)"
+          pButton
+          pRipple
+          label="Finalizar Triaje"
+          type="button"
+          (click)="endTriaje()"
+          class="p-button-outlined"
+          icon="pi pi-check"
+        ></button>
+      </div>
+    </div>
+  </div>
+
   <div>
-    <button pButton pRipple type="button" label="Comprobar escala" class="p-button-rounded" style="width: 300px; height: 60px; font-size: 24px;" (click)="checkEvaScale()"></button>
+    <p-button
+      *ngIf="!finalResponse"
+      icon="pi pi-sign-out"
+      (click)="confirm($event)"
+      label="Salir del Triaje"
+      styleClass="p-button-text"
+    ></p-button>
   </div>
 </div>
-
-<div [ngStyle]="{'background-color': patientLevel.color}" *ngIf="finalResponse">
-  <div>
-    <h1 style="color:rgb(255, 255, 255)">{{patientLevel.label}}</h1>
-  </div>
-  <div>
-    <h2 style="color:rgb(255, 255, 255)">Especialidad: {{destination}}</h2>
-  </div>
-  <div>
-    <h3 style="color:rgb(255, 255, 255)">Nivel de urgencia: {{patientLevel.level}}</h3>
-  </div>
-  <div>
-    <button style="color:rgb(255, 255, 255)" pButton pRipple label="Volver" type="button" (click)="backToTriaje()" class="p-button-outlined" icon="pi pi-arrow-left"></button>
-  </div>
-  <div>
-    <button style="color:rgb(255, 255, 255)" pButton pRipple label="Finalizar Triaje" type="button" (click)="endTriaje()" class="p-button-outlined" icon="pi pi-check"></button>
-  </div>
-</div>
-
-<div>
-  <p-button *ngIf="!finalResponse" icon="pi pi-sign-out" (click)="confirm($event)" label="Salir del Triaje" styleClass="p-button-text"></p-button>
-</div>
-
 <p-confirmPopup [baseZIndex]="100000"></p-confirmPopup>
 
-<p-dialog header="Información del paciente" [(visible)]="displayPatientInfo" [modal]="true" [style]="{width: '75%'}"
-    [draggable]="false" [resizable]="false">
-    <patient-info #infoComponent [patient]="patient"></patient-info>
+<p-dialog
+  header="Información del paciente"
+  [(visible)]="displayPatientInfo"
+  [modal]="true"
+  [style]="{ width: '75%' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <patient-info #infoComponent [patient]="patient"></patient-info>
 </p-dialog>

@@ -1,7 +1,7 @@
-.header{
+/* .header{
   display: flex;
   justify-content: space-between;
-}
+} */
 
 .quickQuestions{
   display: flex;
@@ -23,12 +23,31 @@
   padding: 10px;
 }
 
-.variablesForm{
+/* .variablesForm{
   margin: 5%;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-content: center;
+} */
+
+.variablesFormRow{
+  justify-content: space-around;
+}
+.variablesFormCol{
+  margin: 5px;
+  padding: 0% !important;
+}
+.evaScaleLabel{
+  margin: 0px;
+}
+
+.buttonRow{
+  justify-content: center;
+}
+
+.finalResponsenCol{
+  text-align: center;
 }
 
 .answer button{
@@ -36,3 +55,13 @@
   height: 100%;
   padding: 20px;
 }
+
+.body{
+  height: 80%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
