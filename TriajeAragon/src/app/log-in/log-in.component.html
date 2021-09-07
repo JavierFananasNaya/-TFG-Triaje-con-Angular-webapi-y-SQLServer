@@ -45,12 +45,12 @@
           </div>
         </ng-template>
         <div></div>
-        <p-messages *ngIf="error.length > 0" severity="error">
-          <ng-template pTemplate>
-            <div class="p-ml-2" style="font-size: small;">{{ error }}</div>
-          </ng-template>
-        </p-messages>
       </p-card>
+      <p-messages *ngIf="error.length > 0" severity="error">
+        <ng-template pTemplate>
+          <div class="p-ml-2" style="font-size: small;">{{ error }}</div>
+        </ng-template>
+      </p-messages>
     </div>
   </div>
 </div>
