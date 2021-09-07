@@ -29,6 +29,9 @@ export class LogInComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    if(localStorage.getItem('currentUser') !== null){
+      this.router.navigate(['/patients']);
+    }
   }
 
   logIn(loginForm: NgForm){
