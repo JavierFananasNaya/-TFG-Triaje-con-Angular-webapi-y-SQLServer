@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { Dialog } from 'primeng/dialog';
 import { Patient } from 'src/app/models/patient';
 import { MedicalSpecialityServiceService } from '../medicalSpeciality-service.service';
 import { SpecialityListPatient } from '../models/SpecialityListPatient';
+import { User } from '../models/user';
 import { PatientServiceService } from '../patient-service.service';
 import { VitalServiceService } from '../vital-service.service';
 
@@ -13,6 +15,8 @@ import { VitalServiceService } from '../vital-service.service';
 })
 export class PatientListComponent implements OnInit {
 
+  currentUser: User;
+
   specificListOfPatients: SpecialityListPatient[] = [];
   patientList: Patient[];
   selectedPatient: Patient;
@@ -20,7 +24,7 @@ export class PatientListComponent implements OnInit {
   displaySpecificList: boolean = false;
   typeOfList: number = -1;
 
-  constructor(private patientService: PatientServiceService, private vitalServiceService: VitalServiceService, private medicalSpecialityServiceService:MedicalSpecialityServiceService) {
+  constructor(private patientService: PatientServiceService, private vitalServiceService: VitalServiceService, private medicalSpecialityServiceService:MedicalSpecialityServiceService, private router: Router) {
     this.patientList = [];
     this.selectedPatient = null;
     this.patientService.getRandomPatient().subscribe((result) => {
@@ -67,7 +71,6 @@ export class PatientListComponent implements OnInit {
   openSpecificPatientList(typeNumber: number){
     if(typeNumber === 0){
       this.vitalServiceService.getPatientList().subscribe(result =>{
-        console
         this.specificListOfPatients = result;
         this.displaySpecificList = true;
       })
@@ -82,5 +85,10 @@ export class PatientListComponent implements OnInit {
     this.typeOfList = -1;
     this.displaySpecificList = false;
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if(this.currentUser === null){
+      this.router.navigate(['/login']);
+    }
+  }
 }

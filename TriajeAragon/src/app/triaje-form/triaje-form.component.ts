@@ -222,7 +222,6 @@ export class TriajeFormComponent implements OnInit {
     }else{
       this.reason += 'Molestia general menor.'
     }
-    console.log(this.reason);
   }
 
   previousStep() {
@@ -406,7 +405,6 @@ export class TriajeFormComponent implements OnInit {
     }else{
       this.recordsPatient.diastolePreasure = null;
     }
-    console.log(this.recordsPatient);
   }
   confirm(event: Event) {
     this.confirmationService.confirm({
