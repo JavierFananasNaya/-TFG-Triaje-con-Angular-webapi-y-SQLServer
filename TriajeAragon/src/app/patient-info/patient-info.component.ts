@@ -13,6 +13,7 @@ export class PatientInfoComponent implements OnInit, OnChanges {
   @Input() patient: Patient;
   patientRecord: PatientsRecordData[];
   recordsCols: any[];
+  loading: boolean;
 
   constructor(private patientsRecordService: PatientsRecordServiceService) {
     this.patient = new Patient();
@@ -29,7 +30,7 @@ export class PatientInfoComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-
+    this.loading = true;
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -43,6 +44,7 @@ export class PatientInfoComponent implements OnInit, OnChanges {
   getPatientInfo(){
     this.patientsRecordService.getRecordFromPatient(this.patient).subscribe(result =>{
       this.patientRecord = result;
+      this.loading = false;
     });
   }
 
