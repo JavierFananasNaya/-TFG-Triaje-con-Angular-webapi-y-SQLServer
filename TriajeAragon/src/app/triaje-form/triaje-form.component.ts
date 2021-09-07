@@ -264,10 +264,10 @@ export class TriajeFormComponent implements OnInit {
     this.destination = 'Especialidad Médica';
 
     if(this.patientVariables.temperature){
-      if((this.patientVariables.temperature > 37) && (this.patientVariables.temperature < 38)){
+      if((this.patientVariables.temperature > 37) && (this.patientVariables.temperature <= 38)){
         this.patientLevel = this.urgencyLevels[this.urgencyLevels.findIndex(x => x.level === 3)];
         this.reason += 'Fiebre. ';
-      }else if(this.patientVariables.temperature > 39){
+      }else if(this.patientVariables.temperature >= 39){
         this.reason += 'Fiebre  excesivamente alta. ';
         this.patientLevel = this.urgencyLevels[this.urgencyLevels.findIndex(x => x.level === 2)];
       }
@@ -298,7 +298,7 @@ export class TriajeFormComponent implements OnInit {
 
     // Después de comprobar todas las constantes abriremos la pantalla de escala EVA de dolor
     // unicamente si el nivel de urgencia es amarillo (urgente) o inferior
-    if(this.patientLevel.level >= 3){
+    if(this.patientLevel.level > 3){
       //Activamos valorar escala EVA
       this.evaScale = true;
     }else{
