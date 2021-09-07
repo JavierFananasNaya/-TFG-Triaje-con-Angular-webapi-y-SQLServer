@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { ConfirmationService } from 'primeng/api';
 import { Dialog } from 'primeng/dialog';
 import { Patient } from 'src/app/models/patient';
 import { MedicalSpecialityServiceService } from '../medicalSpeciality-service.service';
@@ -24,7 +25,7 @@ export class PatientListComponent implements OnInit {
   displaySpecificList: boolean = false;
   typeOfList: number = -1;
 
-  constructor(private patientService: PatientServiceService, private vitalServiceService: VitalServiceService, private medicalSpecialityServiceService:MedicalSpecialityServiceService, private router: Router) {
+  constructor(private patientService: PatientServiceService, private vitalServiceService: VitalServiceService, private medicalSpecialityServiceService:MedicalSpecialityServiceService, private router: Router, private confirmationService: ConfirmationService) {
     this.patientList = [];
     this.selectedPatient = null;
     this.patientService.getRandomPatient().subscribe((result) => {
@@ -90,5 +91,24 @@ export class PatientListComponent implements OnInit {
     if(this.currentUser === null){
       this.router.navigate(['/login']);
     }
+  }
+
+  confirm(event: Event) {
+    this.confirmationService.confirm({
+        target: event.target,
+        message: '¿Desea cerrar sesión?',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+            this.logout();
+        },
+        reject: () => {
+           return;
+        }
+    });
+  }
+
+  logout(){
+    localStorage.removeItem('currentUser');
+    this.router.navigate(['/login']);
   }
 }

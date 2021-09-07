@@ -22,6 +22,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { TriajeFormComponent } from './triaje-form/triaje-form.component';
 import { SpecificListComponent } from './specific-list/specific-list.component';
+import { PatientInfoComponent } from './patient-info/patient-info.component';
+// import { TriajeCovidFormComponent } from './triaje-covid-form/triaje-covid-form.component';
+
 
 //PRIME NG MODULES
 
@@ -37,8 +40,7 @@ import {CardModule} from 'primeng/card';
 import {PasswordModule} from 'primeng/password';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
-import { PatientInfoComponent } from './patient-info/patient-info.component';
-
+import {TooltipModule} from 'primeng/tooltip';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,7 @@ import { PatientInfoComponent } from './patient-info/patient-info.component';
     SpecificListComponent,
     LogInComponent,
     PatientInfoComponent,
-
+    // TriajeCovidFormComponent
   ],
   imports: [
     BrowserModule,
@@ -71,7 +73,8 @@ import { PatientInfoComponent } from './patient-info/patient-info.component';
     CardModule,
     PasswordModule,
     MessagesModule,
-    MessageModule
+    MessageModule,
+    TooltipModule
   ],
   providers: [PatientServiceService,VitalServiceService, ConfirmationService, MedicalSpecialityServiceService, UserServiceService, PatientsRecordServiceService],
   bootstrap: [AppComponent]
