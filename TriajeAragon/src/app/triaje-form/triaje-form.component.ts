@@ -268,7 +268,7 @@ export class TriajeFormComponent implements OnInit {
         this.patientLevel = this.urgencyLevels[this.urgencyLevels.findIndex(x => x.level === 3)];
         this.reason += 'Fiebre. ';
       }else if(this.patientVariables.temperature >= 39){
-        this.reason += 'Fiebre  excesivamente alta. ';
+        this.reason += 'Fiebre excesivamente alta. ';
         this.patientLevel = this.urgencyLevels[this.urgencyLevels.findIndex(x => x.level === 2)];
       }
     }
@@ -307,7 +307,15 @@ export class TriajeFormComponent implements OnInit {
   }
 
   checkEvaScale(){
-      if(this.evaScaleValue < 7){
+    if(this.evaScaleValue < 6){
+      let evaQuestion = {label: 'Ninguna urgencia real.', value: true};
+      this.updateReason(evaQuestion);
+      this.finalResponse = true;
+      this.evaScale = false;
+      return;
+    }
+      if(this.evaScaleValue === 6){
+        this.patientLevel = this.urgencyLevels[this.urgencyLevels.findIndex(x => x.level === 4)];
         let evaQuestion = {label: 'Molestia general menor.', value: true};
         this.updateReason(evaQuestion);
         this.finalResponse = true;
