@@ -1,12 +1,4 @@
 <div>
-  <!-- <p-listbox [options]="listOfPatients" [(ngModel)]="selectedPatient" [listStyle]="{'max-height':'250px'}" optionLabel="name">
-    <ng-template let-patient pTemplate="item">
-      <div class="patient-item">
-          <div>{{patient.surname}}, {{patient.name}}</div>
-      </div>
-    </ng-template>
-  </p-listbox> -->
-
   <p-table [value]="listOfPatients">
     <ng-template pTemplate="header">
       <tr>
@@ -17,9 +9,14 @@
   </ng-template>
   <ng-template pTemplate="body" let-patient>
     <tr>
-        <td *ngFor="let col of patientListCols">
-                {{patient[col.field]}}
+      <ng-container *ngFor="let col of patientListCols" [ngSwitch]="true">
+        <td *ngSwitchCase="col.field === 'arrival_time'">
+          {{ patient[col.field] | date: 'HH:mm (dd/MM/YYYY)' }}
         </td>
+        <td *ngSwitchDefault>
+          {{patient[col.field]}}
+        </td>
+      </ng-container>
     </tr>
 </ng-template>
 </p-table>
