@@ -44,6 +44,10 @@
   justify-content: flex-end;
 }
 
+.userName{
+  padding-top: 6px;
+}
+
 /* .generateButton{
   background-color: rgb(177, 207, 184);
 } */

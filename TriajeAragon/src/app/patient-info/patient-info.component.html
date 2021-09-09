@@ -60,6 +60,9 @@
             <td *ngSwitchCase="col.field === 'arrivalTime'">
               {{ rowData[col.field] | date: 'dd/MM/YYYY (HH:mm)' }}
             </td>
+            <td *ngSwitchCase = "rowData[col.field] === 0">
+              <span>-</span>
+            </td>
             <td *ngSwitchDefault>
               {{rowData[col.field]}}
             </td>

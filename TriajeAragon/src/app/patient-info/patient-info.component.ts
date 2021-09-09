@@ -22,7 +22,7 @@ export class PatientInfoComponent implements OnInit, OnChanges {
       { field: 'arrivalTime', header: 'Fecha' },
       { field: 'cause', header: 'Motivo' },
       { field: 'urgency_level', header: 'Nivel de urgencia' },
-      { field: 'temperatura', header: 'Temperatura' },
+      { field: 'temperature', header: 'Temperatura' },
       { field: 'oSaturation', header: 'Saturación de oxígeno' },
       { field: 'sistolePreasure', header: 'Presión sistólica' },
       { field: 'diastolePreasure', header: 'Presión diastólica' }
