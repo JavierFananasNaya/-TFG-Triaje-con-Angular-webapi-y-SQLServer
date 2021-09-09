@@ -32,18 +32,18 @@
         </div>
 
         <ng-template pTemplate="footer">
-          <div class="row" *ngIf="loading === false" style="justify-content: center;">
+          <div class="row" *ngIf="loading === false"  class="footerRow">
             <button
             pButton
             pRipple
             type="button"
             label="Log-in"
             class="p-button-rounded"
-            style="width: 300px; height: 60px; font-size: 24px"
+            style="width: 100%; height: 60px; font-size: 24px"
             (click)="logIn(loginForm)"
             ></button>
           </div>
-          <div class="row" *ngIf="loading === true" style="justify-content: center;">
+          <div class="row" *ngIf="loading === true" class="footerRow">
             <p-progressSpinner></p-progressSpinner>
           </div>
 
