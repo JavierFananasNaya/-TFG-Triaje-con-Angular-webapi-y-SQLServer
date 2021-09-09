@@ -41,6 +41,7 @@ import {PasswordModule} from 'primeng/password';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import {TooltipModule} from 'primeng/tooltip';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import {TooltipModule} from 'primeng/tooltip';
     PasswordModule,
     MessagesModule,
     MessageModule,
-    TooltipModule
+    TooltipModule,
+    ProgressSpinnerModule
   ],
   providers: [PatientServiceService,VitalServiceService, ConfirmationService, MedicalSpecialityServiceService, UserServiceService, PatientsRecordServiceService],
   bootstrap: [AppComponent]

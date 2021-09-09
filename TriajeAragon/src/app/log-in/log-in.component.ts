@@ -18,7 +18,7 @@ export class LogInComponent implements OnInit {
   passwordInput: string;
   error: string = '';
   imagePath: any;
-
+  loading : boolean;
 
 
   constructor(private userServiceService: UserServiceService, private router: Router, private _sanitizer: DomSanitizer) {
@@ -29,6 +29,7 @@ export class LogInComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.loading = false;
     if(localStorage.getItem('currentUser') !== null){
       this.router.navigate(['/patients']);
     }
@@ -44,6 +45,7 @@ export class LogInComponent implements OnInit {
   }
 
   checkUser(){
+    this.loading = true;
     this.userServiceService.checkUser(this.user).subscribe(result =>{
       if(result.length > 0){
         if(this.checkPassword(result[0].password)){
@@ -60,6 +62,7 @@ export class LogInComponent implements OnInit {
       }else{ // Si el usuario no existe también debemos sacar el error.
         this.error = 'Usuario o contraseña incorrectos. Por favor, revise sus datos e intentelo de nuevo.'
       }
+      this.loading = false;
     });
   }
 

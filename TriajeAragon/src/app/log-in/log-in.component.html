@@ -32,7 +32,7 @@
         </div>
 
         <ng-template pTemplate="footer">
-          <div class="row" style="justify-content: center;">
+          <div class="row" *ngIf="loading === false" style="justify-content: center;">
             <button
             pButton
             pRipple
@@ -43,6 +43,10 @@
             (click)="logIn(loginForm)"
             ></button>
           </div>
+          <div class="row" *ngIf="loading === true" style="justify-content: center;">
+            <p-progressSpinner></p-progressSpinner>
+          </div>
+
         </ng-template>
         <div></div>
       </p-card>
